@@ -429,7 +429,7 @@
             <span class="pfeat">No Commitment</span>
           </div>
         </div>
-<!-- 
+
         <div class="package-card popular" data-package="kickstart" data-price="Contact for Pricing" onclick="selectPackage(this)">
           <div class="package-select-indicator"></div>
           <div class="package-header">
@@ -474,13 +474,13 @@
             <span class="pfeat">One-on-One</span>
             <span class="pfeat">Flexible Timing</span>
           </div>
-        </div> -->
+        </div>
 
       </div>
 
       <!-- WHAT'S ALWAYS INCLUDED -->
       <div class="includes-block reveal">
-        <div class="includes-title">Always Included</div>
+        <div class="includes-title">Always Included with Every Package</div>
         <div class="include-item">
           <div class="include-icon">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1v6l4 2"/><circle cx="8" cy="8" r="7"/></svg>
@@ -551,11 +551,11 @@
         <div class="field-row">
           <div class="field">
             <label>Email Address *</label>
-            <input type="email" id="email" placeholder="fabianfrancistt@gmail.com" />
+            <input type="email" id="email" placeholder="you@example.com" />
           </div>
           <div class="field">
             <label>Phone Number *</label>
-            <input type="tel" id="phone" placeholder="+91 75580 94550" />
+            <input type="tel" id="phone" placeholder="+91 98765 43210" />
           </div>
         </div>
 
@@ -716,7 +716,7 @@
       </div>
       <div>
         <div class="contact-label">Email</div>
-        <div class="contact-val">fabianfrancistt@gmail.com</div>
+        <div class="contact-val">hello@myosculpt.com</div>
         <div class="contact-sub">Replies within 24 hours</div>
       </div>
     </div>
@@ -728,7 +728,7 @@
       </div>
       <div>
         <div class="contact-label">WhatsApp / Phone</div>
-        <div class="contact-val">+XX XXXXX XXXXX</div>
+        <div class="contact-val"><a href="https://wa.me/917558094550" style="color:var(--chrome);text-decoration:none;">+91 75580 94550</a></div>
         <div class="contact-sub">Mon – Sat, 6 AM – 8 PM</div>
       </div>
     </div>
@@ -965,21 +965,61 @@
     // ---- SUBMIT ----
     function submitBooking() {
       const btn = document.querySelector('.btn-submit');
-      btn.textContent = 'Submitting...';
+      btn.textContent = 'Opening WhatsApp...';
       btn.disabled = true;
 
-      // Simulate submission (replace with real backend/emailjs/formspree)
+      const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      const [yr, mo, dy] = (selectedDate || '--').split('-');
+      const time = document.querySelector('.time-slot.selected')?.textContent || 'Not selected';
+      const goals = [...document.querySelectorAll('.goal-tag.selected')].map(g => g.textContent).join(', ') || 'Not specified';
+      const loc = document.getElementById('location').value || 'Not specified';
+      const notes = document.getElementById('notes').value.trim() || 'None';
+      const dateStr = selectedDate ? `${months[parseInt(mo)]} ${dy}, ${yr}` : 'Not selected';
+      const fitness = document.getElementById('fitnessLevel').value || 'Not specified';
+      const health = document.getElementById('health').value.trim() || 'None';
+      const age = document.getElementById('age').value || 'Not provided';
+      const ref = 'MYO-' + Date.now().toString(36).toUpperCase().slice(-6);
+
+      const message =
+`✦ NEW BOOKING REQUEST — MYO SCULPT
+
+Reference: ${ref}
+
+👤 CLIENT DETAILS
+Name: ${document.getElementById('firstName').value} ${document.getElementById('lastName').value}
+Email: ${document.getElementById('email').value}
+Phone: ${document.getElementById('phone').value}
+Age: ${age}
+
+🎯 GOALS & FITNESS
+Goals: ${goals}
+Fitness Level: ${fitness}
+Health Notes: ${health}
+
+📦 PACKAGE
+${selectedPackage?.name || 'Not selected'} — ${selectedPackage?.price || '—'}
+
+📅 PREFERRED SCHEDULE
+Date: ${dateStr}
+Time: ${time}
+Location: ${loc}
+
+📝 ADDITIONAL NOTES
+${notes}`;
+
+      const whatsappURL = `https://wa.me/917558094550?text=${encodeURIComponent(message)}`;
+
       setTimeout(() => {
+        // Show success screen
         document.getElementById('step3').classList.remove('active');
         document.getElementById('successState').style.display = 'block';
         document.getElementById('progressFill').style.width = '100%';
-        // Update step dots
         for (let i = 1; i <= 3; i++) document.getElementById(`stepDot${i}`).classList.add('done');
-        // Generate reference
-        const ref = 'MYO-' + Date.now().toString(36).toUpperCase().slice(-6);
         document.getElementById('successRef').textContent = `Booking Reference: ${ref}`;
         window.scrollTo({ top: document.querySelector('.form-col').offsetTop - 80, behavior: 'smooth' });
-      }, 1400);
+        // Open WhatsApp
+        window.open(whatsappURL, '_blank');
+      }, 800);
     }
   </script>
 </body>
