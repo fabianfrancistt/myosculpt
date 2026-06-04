@@ -402,7 +402,7 @@
       <h1 class="page-title">
         BOOK A<br><span class="ghost">SESSION</span>
       </h1>
-      <p class="page-subtitle">Choose your program, pick a time that works for you, and let's get started. Your first consultation is free.</p>
+      <p class="page-subtitle">Book your free 30-minute consultation call. Tell Fabian about your goals, pick a time that works for you, and let's get started — no cost, no commitment.</p>
     </div>
   </div>
 
@@ -411,8 +411,8 @@
 
     <!-- LEFT: PACKAGES -->
     <div class="packages-col">
-      <div class="col-label reveal">Choose Your Program</div>
-      <h2 class="col-title reveal">SELECT A<br>PACKAGE</h2>
+      <div class="col-label reveal">Get Started</div>
+      <h2 class="col-title reveal">FREE<br>CONSULTATION</h2>
 
       <div class="package-cards reveal" id="packageCards">
 
@@ -427,52 +427,6 @@
             <span class="pfeat">30 Minutes</span>
             <span class="pfeat">Online / In-Person</span>
             <span class="pfeat">No Commitment</span>
-          </div>
-        </div>
-
-        <div class="package-card popular" data-package="kickstart" data-price="Contact for Pricing" onclick="selectPackage(this)">
-          <div class="package-select-indicator"></div>
-          <div class="package-header">
-            <div class="package-name">KICKSTART — 4 WEEKS</div>
-            <div class="package-badge">Popular</div>
-          </div>
-          <div class="package-price">4 <span>sessions / week</span></div>
-          <p class="package-desc">A focused 4-week block to build your foundation — movement assessment, custom programming, nutrition targets, and weekly check-ins.</p>
-          <div class="package-features">
-            <span class="pfeat">16 Sessions</span>
-            <span class="pfeat">Custom Program</span>
-            <span class="pfeat">Nutrition Plan</span>
-            <span class="pfeat">Weekly Check-ins</span>
-          </div>
-        </div>
-
-        <div class="package-card" data-package="transformation" data-price="Contact for Pricing" onclick="selectPackage(this)">
-          <div class="package-select-indicator"></div>
-          <div class="package-header">
-            <div class="package-name">TRANSFORMATION — 12 WEEKS</div>
-          </div>
-          <div class="package-price">12 <span>week program</span></div>
-          <p class="package-desc">The full MYO method — training, nutrition, lifestyle coaching, body composition tracking, and ongoing adjustments for 12 weeks of real change.</p>
-          <div class="package-features">
-            <span class="pfeat">48 Sessions</span>
-            <span class="pfeat">Diet Coaching</span>
-            <span class="pfeat">Lifestyle Plan</span>
-            <span class="pfeat">Body Composition</span>
-            <span class="pfeat">Priority Booking</span>
-          </div>
-        </div>
-
-        <div class="package-card" data-package="single" data-price="Contact for Pricing" onclick="selectPackage(this)">
-          <div class="package-select-indicator"></div>
-          <div class="package-header">
-            <div class="package-name">SINGLE SESSION</div>
-          </div>
-          <div class="package-price">1 <span>session</span></div>
-          <p class="package-desc">Drop in for a single one-on-one training session. Ideal for trying out the MYO method before committing to a program.</p>
-          <div class="package-features">
-            <span class="pfeat">60 Minutes</span>
-            <span class="pfeat">One-on-One</span>
-            <span class="pfeat">Flexible Timing</span>
           </div>
         </div>
 
@@ -902,6 +856,12 @@
     }
 
     renderCalendar();
+
+    // Auto-select the only package (free consultation)
+    (function preselectPackage() {
+      const card = document.querySelector('.package-card');
+      if (card) selectPackage(card);
+    })();
 
     // ---- TIME SLOTS ----
     function selectTime(el) {
